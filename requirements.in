@@ -1,0 +1,5 @@
+# requirements.in
+matplotlib
+PyYAML
+requests
+tensorflow >= 2
