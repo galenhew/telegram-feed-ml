@@ -2,11 +2,14 @@ import telegram_feed as tele
 
 import yaml
 
-with open("config.yaml", "r") as yamlfile:
-    data = yaml.load(yamlfile, Loader=yaml.FullLoader)
-    access_token= data['telegram_api']['access_token']
+keys_file = 'config.yaml'
 
-
+with open(keys_file) as yamlfile:
+    try:
+      data=yaml.safe_load(yamlfile)
+      access_token= data['telegram_api']['access_token']
+    except yaml.YAMLError as exc:
+        print(exc)
 # run me to test
 
 notebook_name= 'telegram-colab notebook'
