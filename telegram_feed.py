@@ -25,10 +25,14 @@ notebook_name= 'telegram-colab notebook'
 
 import yaml
 
-with open("config.yaml", "r") as yamlfile:
-    data = yaml.load(yamlfile, Loader=yaml.FullLoader)
-    access_token= data['telegram_api']['access_token']
 
+def load_conf_file(config_file):
+    with open(config_file, "r") as yamlfile:
+        data = yaml.safe_load(yamlfile)
+        access_token= data['telegram_api']['access_token']
+    return access_token
+
+access_token = load_conf_file("config.yaml")
 
 
 class botCallback(tf.keras.callbacks.Callback):
@@ -57,7 +61,7 @@ class botCallback(tf.keras.callbacks.Callback):
         self.response = requests.get(self.ping_url)
     
     def send_photo(self,filepath):
-        imagefile= open(filepath,"rb")
+        imagefile= open(str(filepath),"rb")
         file_dict = {'photo':imagefile}
         self.ping_url = 'https://api.telegram.org/bot'+str(self.access_token)+'/sendPhoto?chat_id='+str(self.chat_id)
         self.response = requests.post(self.ping_url, files = file_dict)
