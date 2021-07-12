@@ -32,8 +32,6 @@ def load_conf_file(config_file):
         access_token= data['telegram_api']['access_token']
     return access_token
 
-access_token = load_conf_file("config.yaml")
-
 
 class botCallback(tf.keras.callbacks.Callback):
     def __init__(self,access_token, notebook_name):
@@ -160,6 +158,7 @@ class Plotter(botCallback):
 
 
 if __name__ == '__main__':
+    access_token = load_conf_file("config.yaml")
     mnist = tf.keras.datasets.mnist
 
     (x_train, y_train), (x_test, y_test) = mnist.load_data()
